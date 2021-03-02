@@ -1,11 +1,11 @@
 package Fakedb
 
 import (
-	"sync"
-	"strings"
+	"Fakedb/helpers"
 	"fmt"
 	_ "strconv"
-	"Fakedb/helpers"
+	"strings"
+	"sync"
 )
 
 // in DB u cant use `"` in tableName
@@ -16,9 +16,9 @@ type DB struct {
 
 type table struct {
 	sync.Mutex
-	name string
+	name       string
 	columnType map[string]string
-	rows    []*rowType
+	rows       []*rowType
 }
 
 func (t *table) Write() {
@@ -202,32 +202,3 @@ func (db *DB) Select(s string) ([]*rowType, error) {
 	}
 	return rows, nil
 }
-
-//func main() {
-//	DB := &DB{}
-//	err := DB.CreateTable(`33|id = int, amount = string`)
-//	if err != nil {
-//		fmt.Println(err)
-//		return
-//	}
-//	fmt.Println(DB.Tables["33"])
-//	err = DB.Insert(`33|id=?,amount="5"`, 1)
-//	if err != nil {
-//		fmt.Println(err)
-//		return
-//	}
-//	fmt.Println(DB.Tables["33"])
-//	err = DB.Insert(`33|id=2,amount="12"`)
-//	if err != nil {
-//		fmt.Println(err)
-//		return
-//	}
-//	fmt.Println(DB.Tables["33"])
-//	s, err := DB.Select(`33|amount, id|id=?`, 1)
-//	if err != nil {
-//		fmt.Println(err)
-//		return
-//	}
-//	fmt.Println(s)
-//}
-
